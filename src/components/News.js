@@ -29,9 +29,11 @@ export class News extends Component {
     }
 
     async update() {
+        this.props.setProgress(10);
         const url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=28739367a9c0407184f54af6984b6f97&page=${this.props.page}&pageSize=${this.props.pageSize}`;
         this.setState({ loading: true })
         let data = await fetch(url);
+
         let parseddata = await data.json();
         console.log(parseddata);
         this.setState({
@@ -39,6 +41,7 @@ export class News extends Component {
             total: parseddata.totalResults,
             loading: false
         })
+        this.props.setProgress(100);
     }
     async componentDidMount() {
         this.update();
